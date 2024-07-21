@@ -1,0 +1,47 @@
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-3xl font-bold mb-8 text-gray-800">My Boards</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    @for (board of boards; track board.id) {
+      <mat-card class="board-card h-full flex flex-col justify-between transition-all duration-300 hover:shadow-lg">
+        <mat-card-header>
+          <mat-card-title 
+            class="text-xl font-semibold mb-2 text-center w-full cursor-pointer hover:text-blue-600 transition-colors duration-200" 
+            [routerLink]="['/boards', board.id]">
+            {{ board.name }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="flex-grow">
+          <!-- You can add more content here, like a brief description or stats -->
+        </mat-card-content>
+        <mat-card-actions class="flex justify-around p-4">
+          <button 
+            mat-stroked-button 
+            color="primary" 
+            (click)="openEditBoardFlow(board)"
+            class="flex-1 mr-2 border-blue-500 text-blue-500 hover:bg-blue-50">
+            Edit
+          </button>
+          <button 
+            mat-stroked-button 
+            color="warn" 
+            (click)="onDeleteBoard(board)"
+            class="flex-1 ml-2 border-red-500 text-red-500 hover:bg-red-50">
+            Delete
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+
+  <div class="mt-8 flex justify-center">
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="openNewBoardFlow()"
+      class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full shadow-md transition-all duration-300 hover:shadow-lg">
+      <mat-icon class="mr-2">add</mat-icon>
+      Add New Board
+    </button>
+  </div>
+</div>

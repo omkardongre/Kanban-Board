@@ -1,0 +1,176 @@
+    USER {
+        int id PK
+        string firstName
+        string lastName
+        string email
+        string password
+        boolean emailVerified
+    }
+    
+    BOARD {
+        int id PK
+        string name
+    }
+    
+    SWIMLANE {
+        int id PK
+        string name
+        int order
+        int boardId FK
+    }
+    
+    CARD {
+        int id PK
+        string name
+        string content
+        int order
+        int assigneeId FK
+        int swimlaneId FK
+    }
+
+
+
+
+
+-- Card Table
+CREATE TABLE "card" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(100) NOT NULL,
+  "content" TEXT NOT NULL,
+  "order" INTEGER NOT NULL,
+  "assigneeId" INTEGER,
+  "swimlaneId" INTEGER,
+  FOREIGN KEY ("assigneeId") REFERENCES "user"("id"),
+  FOREIGN KEY ("swimlaneId") REFERENCES "swimlane"("id")
+);
+
+-- Swimlane Table
+CREATE TABLE "swimlane" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(100) NOT NULL,
+  "order" INTEGER NOT NULL,
+  "boardId" INTEGER,
+  FOREIGN KEY ("boardId") REFERENCES "board"("id")
+);
+
+-- User Table
+CREATE TABLE "user" (
+  "id" SERIAL PRIMARY KEY,
+  "firstName" VARCHAR(100) NOT NULL,
+  "lastName" VARCHAR(100) NOT NULL,
+  "email" VARCHAR(100) UNIQUE NOT NULL,
+  "password" VARCHAR(255) NOT NULL,
+  "emailVerified" BOOLEAN NOT NULL DEFAULT false
+);
+
+-- Board Table
+CREATE TABLE "board" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR(100) NOT NULL
+);
+
+-- Join Table for Board-User Many-to-Many Relationship
+CREATE TABLE "board_users_user" (
+  "boardId" INTEGER,
+  "userId" INTEGER,
+  PRIMARY KEY ("boardId", "userId"),
+  FOREIGN KEY ("boardId") REFERENCES "board"("id") ON DELETE CASCADE,
+  FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+// card.entity.ts
+@Entity()
+export class Card {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ length: 100 })
+  name: string;
+
+  @Column()
+  content: string;
+ 
+  @Column()
+  order: number;
+
+  @ManyToOne(() => User, (user) => user.cards)
+  assignee: User;
+
+  @ManyToOne(() => Swimlane, (swimlane) => swimlane.cards)
+  swimlane: Swimlane;
+}
+
+// swimlane.entity.ts
+@Entity()
+export class Swimlane {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ length: 100 })
+  name: string;
+
+  @Column()
+  order: number;
+
+  @ManyToOne(() => Board, (board) => board.swimlanes)
+  board: Board;
+
+  @OneToMany(() => Card, (card) => card.swimlane)
+  cards: Card[];
+}
+
+// user.entity.ts
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ length: 100 })
+  firstName: string;
+
+  @Column({ length: 100 })
+  lastName: string;
+
+  @Column({ length: 100, unique: true })
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column({ default: false })
+  emailVerified: boolean;
+
+  @ManyToMany(() => Board, (board) => board.users)
+  boards: Board[];
+
+  @OneToMany(() => Card, (card) => card.assignee)
+  cards: Card[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+}
+
+// board.entity.ts
+@Entity()
+export class Board {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ length: 100 })
+  name: string;
+
+  @ManyToMany(() => User, (user) => user.boards)
+  @JoinTable()
+  users: User[];
+
+  @OneToMany(() => Swimlane, (swimlane) => swimlane.board)
+  swimlanes: Swimlane[];
+}

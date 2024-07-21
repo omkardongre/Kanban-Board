@@ -1,0 +1,161 @@
+
+{
+    "name": "second swimlane",
+    "order": 1,
+    "board": {
+        "id": 1,
+        "name": "first boards",
+        "users": [
+            {
+                "id": 1,
+                "firstName": "om",
+                "lastName": "don",
+                "email": "om@g.com",
+                "password": "$2b$10$mlhp.LqwlPJJbOoTeVUQBu6Gw41CnMcwbKDpSPe8OapTy7pSmiTw2",
+                "emailVerified": false
+            }
+        ],
+        "swimlanes": [
+            {
+                "id": 1,
+                "name": "first swimlane",
+                "order": 0,
+                "cards": []
+            }
+        ]
+    },
+    "id": 5
+}
+
+
+
+
+
+{
+    "id": 1,
+    "name": "first boards",
+    "users": [
+        {
+            "id": 1,
+            "firstName": "om",
+            "lastName": "don",
+            "email": "om@g.com",
+            "password": "$2b$10$mlhp.LqwlPJJbOoTeVUQBu6Gw41CnMcwbKDpSPe8OapTy7pSmiTw2",
+            "emailVerified": false
+        }
+    ],
+    "swimlanes": [
+        {
+            "id": 1,
+            "name": "first swimlane",
+            "order": 0,
+            "cards": []
+        },
+        {
+            "id": 5,
+            "name": "second swimlane",
+            "order": 1,
+            "cards": []
+        }
+    ]
+}
+
+
+
+{
+    "name": "third swimlane",
+    "order": 2,
+    "board": {
+        "id": 1,
+        "name": "first boards",
+        "users": [
+            {
+                "id": 1,
+                "firstName": "om",
+                "lastName": "don",
+                "email": "om@g.com",
+                "password": "$2b$10$mlhp.LqwlPJJbOoTeVUQBu6Gw41CnMcwbKDpSPe8OapTy7pSmiTw2",
+                "emailVerified": false
+            }
+        ],
+        "swimlanes": [
+            {
+                "id": 1,
+                "name": "first swimlane",
+                "order": 0,
+                "cards": []
+            },
+            {
+                "id": 5,
+                "name": "second swimlane",
+                "order": 1,
+                "cards": []
+            }
+        ]
+    },
+    "id": 6
+}
+
+
+boards
+{
+    "id": 1,
+    "name": "first boards",
+    "users": [
+        {
+            "id": 1,
+            "firstName": "om",
+            "lastName": "don",
+            "email": "om@g.com",
+            "password": "$2b$10$mlhp.LqwlPJJbOoTeVUQBu6Gw41CnMcwbKDpSPe8OapTy7pSmiTw2",
+            "emailVerified": false
+        }
+    ],
+    "swimlanes": [
+        {
+            "id": 1,
+            "name": "first swimlane",
+            "order": 0,
+            "cards": []
+        },
+        {
+            "id": 5,
+            "name": "second swimlane",
+            "order": 1,
+            "cards": []
+        },
+        {
+            "name": "third swimlane",
+            "order": 2,
+            "board": {
+                "id": 1,
+                "name": "first boards",
+                "users": [
+                    {
+                        "id": 1,
+                        "firstName": "om",
+                        "lastName": "don",
+                        "email": "om@g.com",
+                        "password": "$2b$10$mlhp.LqwlPJJbOoTeVUQBu6Gw41CnMcwbKDpSPe8OapTy7pSmiTw2",
+                        "emailVerified": false
+                    }
+                ],
+                "swimlanes": [
+                    {
+                        "id": 1,
+                        "name": "first swimlane",
+                        "order": 0,
+                        "cards": []
+                    },
+                    {
+                        "id": 5,
+                        "name": "second swimlane",
+                        "order": 1,
+                        "cards": []
+                    }
+                ]
+            },
+            "id": 6
+        }
+    ]
+}

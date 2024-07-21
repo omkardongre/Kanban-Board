@@ -1,0 +1,18 @@
+<nav *ngIf="shouldShowNavbar()" class="bg-gray-100 p-4 shadow-md">
+    <div class="flex justify-between items-center w-full">
+      <div class="flex-grow">
+        <div class="text-xl font-bold text-center">
+          Kanban
+        </div>
+      </div>
+      <div class="flex items-center space-x-5">
+        <div class="flex items-center justify-center w-10 h-10 bg-gray-300 rounded-full">
+          <span class="text-lg font-semibold text-gray-700">{{ initials }}</span>
+        </div>
+        <button (click)="logout()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+  

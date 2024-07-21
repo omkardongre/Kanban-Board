@@ -1,0 +1,61 @@
+
+<!-- Loading overlay -->
+<div *ngIf="isLoading" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
+  <mat-spinner></mat-spinner>
+</div>
+
+<!-- Conditionally display the board or a loading message -->
+<div *ngIf="board; else loading" class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">{{ board.name }}</h1>
+  <div class="swimlanes grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" cdkDropList
+    [cdkDropListData]="board.swimlanes" (cdkDropListDropped)="dragSwimlane($event)" cdkDropListOrientation="horizontal"
+    cdkDropListGroup>
+    <!-- Loop through swimlanes -->
+    @for (swimlane of board.swimlanes; track swimlane) {
+    <div class="swimlane bg-gray-100 rounded-lg p-6 shadow-lg" cdkDrag>
+      <h2 class="text-2xl font-semibold mb-4 text-gray-700">{{ swimlane.name }}</h2>
+      <div class="flex justify-between items-center mb-4">
+        <button mat-stroked-button color="warn" (click)="deleteSwimlane(swimlane)" class="text-red-500 border-red-500">Delete</button>
+        <button mat-stroked-button color="primary" (click)="editSwimlane(swimlane)" class="text-blue-500 border-blue-500">Edit</button>
+      </div>
+
+      <!-- Loop through cards within a swimlane -->
+      <div class="cards space-y-3 min-h-20" cdkDropList [cdkDropListData]="swimlane"
+        (cdkDropListDropped)="dragCard($event)">
+        @for (card of swimlane.cards; track card) {
+        <div class="card bg-white p-4 rounded-md shadow-md flex justify-between items-center transition-all duration-200 hover:shadow-lg" cdkDrag>
+          <p class="text-sm text-gray-700">{{ card.name }}</p>
+          <div class="flex space-x-2">
+            <button mat-icon-button color="warn" (click)="deleteCard(card.id, swimlane)" class="text-red-500">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="editCard(card, swimlane.id)" class="text-blue-500">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+      <button mat-raised-button color="primary" (click)="addCard(swimlane)" class="mt-6 w-full bg-blue-500 hover:bg-blue-600">Add card</button>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- Loading message displayed when board is undefined -->
+<ng-template #loading>
+  <div class="flex justify-center items-center h-64">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<!-- Form to add a new swimlane -->
+<form [formGroup]="swimlaneForm" (ngSubmit)="addSwimlane()" class="mt-8 max-w-md mx-auto">
+  <mat-form-field  class="w-full">
+    <mat-label>Swimlane name</mat-label>
+    <input matInput type="text" formControlName="name" placeholder="Enter swimlane name">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" class="mt-4 w-full bg-green-500 hover:bg-green-600">
+    Add swimlane
+  </button>
+</form>

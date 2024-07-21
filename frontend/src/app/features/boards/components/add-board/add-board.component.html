@@ -1,0 +1,20 @@
+<div class="flex justify-center items-center bg-gray-100">
+  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6 relative">
+    <button mat-icon-button class="absolute top-2 right-2" (click)="closeDialog()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-center">{{data?"Edit":"Add"}} board</h2>
+
+    <form [formGroup]="addBoardForm">
+      <mat-form-field appearance="fill" class="w-full mb-4">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Ex. My board" formControlName="name">
+        <mat-error *ngIf="addBoardForm.controls['name'].invalid && (addBoardForm.controls['name'].dirty || addBoardForm.controls['name'].touched)">
+          Please enter a valid name.
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button (click)="data?updateBoard():createBoard()" color="primary" class="w-full py-3 mt-4">{{data?"Edit":"Add"}} board</button>
+    </form>
+  </div>
+</div>
